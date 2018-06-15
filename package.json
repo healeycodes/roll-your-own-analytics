@@ -1,0 +1,22 @@
+{
+  "name": "tracker3000",
+  "version": "1.0.0",
+  "description": "Website Analytics",
+  "main": "track.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.6"
+  },
+  "dependencies": {
+    "cookies-js": "^1.2.3"
+  }
+}
