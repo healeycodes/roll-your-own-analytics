@@ -1,12 +1,13 @@
 {
-  "name": "tracker3000",
+  "name": "tab",
   "version": "1.0.0",
   "description": "Website Analytics",
-  "main": "track.js",
+  "main": "app.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
+    "webpack": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

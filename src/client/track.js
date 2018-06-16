@@ -6,13 +6,13 @@
  */
 
 import * as cookies from 'cookies-js'
-import * as util from './lib/util'
+import * as util from '../lib/util'
 
 const trackingUrl = '' // Server
 const pageTickRate = 5000 // Report user still on page every X milliseconds
 
 // Cookie name
-const cookieName = '_tracker3000'
+const cookieName = '_tab'
 
 // Measure period
 const cookieExpire = () => Math.round(new Date() -
