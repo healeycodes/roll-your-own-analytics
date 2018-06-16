@@ -8,14 +8,14 @@ const rndId = (len=64) => {
     return id
 }
 
-// Check for internal referer
-const isInternalReferer = (referer, hostname) => {
+// Check for internal referrer
+const isInternalReferrer = (referrer, hostname) => {
     let ref
     // Ensure that the check works for both HTTP and HTTPS internal referals
-    ref = referer.replace('http://', '')
+    ref = referrer.replace('http://', '')
     ref = ref.replace('https://', '')
 
     return ref.indexOf(hostname) > 0
 }
 
-export {rndId, isInternalReferer}
+export {rndId, isInternalReferrer}

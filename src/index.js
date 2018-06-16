@@ -1,29 +1,52 @@
+/* index.js
+ *
+ * Client-side script that reports analytics
+ * Sends web page path, query, page referrer, and unique viewer id
+ * Also sends keep alive message to report time spent on page
+ */
+
 import * as cookies from 'cookies-js'
 import * as util from './lib/util'
 
-
-// Where we send our session data to
-const trackingUrl = ''
+const trackingUrl = '' // Server
+const pageTickRate = 5000 // Report user still on page every X milliseconds
 
 // Cookie name
 const cookieName = '_tracker3000'
 
 // Measure period
 const cookieExpire = () => Math.round(new Date() -
-new Date().setUTCHours(0, 0, 0, 0) // Ends at midnight (UTC)
+    new Date().setUTCHours(0, 0, 0, 0) // Ends at midnight (UTC)
 ) / 1000
 
-const setCookie = (viewerId) => cookies.set(cookieName, viewerId, {'expires': cookieExpire()})
+// Sets measure period cookie for unique visit
+const setCookie = (viewerId) => cookies.set(cookieName, viewerId, { 'expires': cookieExpire() })
 
+// Gets measure period cookie or returns :undefined: if none
 const getCookie = () => cookies.get(cookieName)
 
 // Blueprint for analytic data to be sent
 class PageView {
-    constructor(pathName, query, viewerId, referer) {
+    constructor(pathName, query, viewerId, referrer) {
         this._pathName = pathName
         this._query = query
         this._viewerId = viewerId
-        this._referer = referer
+        this._referrer = referrer
+    }
+
+    // Get viewer id
+    viewerId() {
+        return JSON.stringify({ viewerId: this._viewerId })
+    }
+
+    // Get page view report
+    report() {
+        return JSON.stringify({
+            pathName: this._pathName,
+            query: this._query,
+            viewerId: this._viewerId,
+            referrer: this._referrer
+        })
     }
 }
 
@@ -43,20 +66,43 @@ const createPageView = () => {
     }
 
     // Grab referal only if it's external
-    let referer
-    if (util.isInternalReferer(document.referrer, location.hostname)) {
-        referer = ''
+    let referrer
+    if (util.isInternalReferrer(document.referrer, location.hostname)) {
+        referrer = ''
     } else {
-        referer = document.referrer
+        referrer = document.referrer
     }
 
-    return new PageView(pathName, query, viewerId, referer)
+    return new PageView(pathName, query, viewerId, referrer)
 }
 
-// Grab this view data
+// Collect all the data we need
 const thisView = createPageView()
 
-// console.log(thisView)
+// Log the view
+const logView = () => {
+    const xhttpLog = new XMLHttpRequest()
+    xhttpLog.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // View logged successfully
+        }
+    }
+    xhttpLog.open('POST', `${trackingUrl}/track/log`)
+    xhttpLog.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
+    xhttpLog.send(thisView.report())
+}
+logView()
 
-// Loop
-
+// Track time on page
+const trackPageTime = () => {
+    const xhttpTrack = new XMLHttpRequest()
+    xhttpTrack.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Time tracked successfully
+        }
+    }
+    xhttpTrack.open('POST', `${trackingUrl}/track/time`)
+    xhttpTrack.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
+    xhttpTrack.send(thisView.viewerId())
+}
+const trackTimer = setInterval(trackPageTime, pageTickRate)
