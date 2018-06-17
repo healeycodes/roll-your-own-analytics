@@ -1,25 +1,25 @@
 /* index.js
  *
- * Client-side script that reports analytics
- * Sends web page path, query, page referrer, and unique viewer id
- * Also sends keep alive message to report time spent on page
+ * Script that runs on a web page visit, which reports analytics.
+ * Sends web page path, query, page referrer, and unique viewer id.
+ * Also sends keep alive message to report time spent on page.
  */
 
 import * as cookies from 'cookies-js'
-import * as util from '../lib/util'
+import * as util from './lib/util'
 
 const trackingUrl = '' // Server
 const pageTickRate = 5000 // Report user still on page every X milliseconds
 
 // Cookie name
-const cookieName = '_tab'
+const cookieName = '_track'
 
 // Measure period
 const cookieExpire = () => Math.round(new Date() -
     new Date().setUTCHours(0, 0, 0, 0) // Ends at midnight (UTC)
 ) / 1000
 
-// Sets measure period cookie for unique visit
+// Creates measure period cookie, to track unique visits and sessions
 const setCookie = (viewerId) => cookies.set(cookieName, viewerId, { 'expires': cookieExpire() })
 
 // Gets measure period cookie or returns :undefined: if none

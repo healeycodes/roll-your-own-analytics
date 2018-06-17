@@ -1,9 +1,9 @@
 const path = require('path')
 
 module.exports = {
-  entry: './src/client/track.js',
+  entry: './src/tracker/track.js',
   output: {
-    filename: 'tab.js',
+    filename: 'track.js',
     path: path.resolve(__dirname, 'dist')
   }
 }
