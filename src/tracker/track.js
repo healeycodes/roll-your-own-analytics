@@ -1,14 +1,14 @@
 /* index.js
  *
  * Script that runs on a web page visit, which reports analytics.
- * Sends web page path, query, page referrer, and unique viewer id.
- * Also sends keep alive message to report time spent on page.
+ * Sends web page path, query, page referrer, unique viewer id,
+ * and hitId. Also sends keep alive message to report time spent on page.
  */
 
 import * as cookies from 'cookies-js'
 import * as util from './lib/util'
 
-const trackingUrl = '' // Server
+const trackingUrl = '' // Server address without trailing forward slash
 const pageTickRate = 5000 // Report user still on page every X milliseconds
 
 // Cookie name
@@ -32,16 +32,18 @@ class PageView {
         this._query = query
         this._viewerId = viewerId
         this._referrer = referrer
+        this._hitId = utils.rndId()
     }
 
-    // Get viewer id
-    viewerId() {
-        return JSON.stringify({ viewerId: this._viewerId })
+    // Get hitId
+    hitId() {
+        return JSON.stringify({ hitId: this._hitId })
     }
 
     // Get page view report
     report() {
         return JSON.stringify({
+            hitId: this._hitId,
             pathName: this._pathName,
             query: this._query,
             viewerId: this._viewerId,
@@ -103,6 +105,6 @@ const trackPageTime = () => {
     }
     xhttpTrack.open('POST', `${trackingUrl}/track/time`)
     xhttpTrack.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
-    xhttpTrack.send(thisView.viewerId())
+    xhttpTrack.send(thisView.hitId())
 }
 const trackTimer = setInterval(trackPageTime, pageTickRate)
