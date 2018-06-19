@@ -8,7 +8,7 @@
 import * as cookies from 'cookies-js'
 import * as util from './lib/util'
 
-const trackingUrl = '' // Server address without trailing forward slash
+const trackingUrl = 'http://localhost:3000' // Server address without trailing forward slash
 const pageTickRate = 5000 // Report user still on page every X milliseconds
 
 // Cookie name
@@ -32,7 +32,7 @@ class PageView {
         this._query = query
         this._viewerId = viewerId
         this._referrer = referrer
-        this._hitId = utils.rndId()
+        this._hitId = util.rndId()
     }
 
     // Get hitId
@@ -54,8 +54,8 @@ class PageView {
 
 // Create analytic data
 const createPageView = () => {
-    let pathName = location.pathname
-    let query = location.search
+    let pathName = location.pathname // Default: "/"
+    let query = location.search // Default: ""
 
     // Grab or create viewerId
     let viewerId
