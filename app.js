@@ -18,6 +18,10 @@ app.use(cors()) // Enable Cross-Origin Resource Sharing (CORS)
 const pageTickRate = 5 // Recieve time update from tracking script every X seconds
 
 
+// GET: Tracking script
+app.get('/track.js', (req, res) => res.sendFile(__dirname + '/dist/track.js'))
+
+
 // GET: Home
 app.get('/', (req, res) => res.send('Hello World!'))
 

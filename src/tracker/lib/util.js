@@ -1,5 +1,5 @@
 // Used to create random session ids
-const rndId = (len=64) => {
+const rndId = (len = 64) => {
     let id = ''
     let possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     for (let i = 0; i < len; i++) {
@@ -18,4 +18,4 @@ const isInternalReferrer = (referrer, hostname) => {
     return ref.indexOf(hostname) > 0
 }
 
-export {rndId, isInternalReferrer}
+export { rndId, isInternalReferrer }

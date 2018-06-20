@@ -8,7 +8,7 @@
 import * as cookies from 'cookies-js'
 import * as util from './lib/util'
 
-const trackingUrl = 'http://localhost:3000' // Server address without trailing forward slash
+const trackingUrl = window.rollyourownanalytics.url
 const pageTickRate = 5000 // Report user still on page every X milliseconds
 
 // Cookie name
