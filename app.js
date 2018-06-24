@@ -1,4 +1,5 @@
 /* app.js
+ *
  * The Express app for roll-your-own-analytics.
  * Tracks unique visitors, page views, average time on site,
  * bounce rate, top pages, top referrers, and variations of these.
