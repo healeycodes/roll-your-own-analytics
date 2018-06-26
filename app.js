@@ -13,7 +13,7 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cors()) // Enable Cross-Origin Resource Sharing (CORS) 
-// app.options('*', cors())
+app.options('*', cors())
 
 
 const pageTickRate = 5 // Recieve time update from tracking script every X seconds
@@ -24,7 +24,41 @@ app.get('/track.js', (req, res) => res.sendFile(__dirname + '/dist/track.js'))
 
 
 // GET: Home
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => {
+    let str = ''
+    models.View.findAll({
+        where: {
+            daysSinceEpoch: Math.round(Date.now() / 1000 / 60 / 60 / 24)
+        }
+    })
+        .then(instances => {
+            for (let i = 0; i < instances.length; i++) {
+                str += String(instances[i].pathName) + '\n'
+            }
+            res.send(str)
+        })
+})
+
+app.get('/add', (req, res) => {
+    const addDemoData = require('./demoData')
+    addDemoData()
+})
+
+
+// GET: Dashboard
+app.get('/dashboard', (req, res) => {
+
+    // Main loop
+
+    let pages = {} // 'page' : {views: 0, uniques: 0}
+    let referrers = {} // 'referrer' : {views: 0, uniques: 0}
+    let totalUniques = 0
+    let totalPageViews = 0
+    let averageTimeOnSiteData = {'views': 0, 'timeSpent': 0}
+
+    // Bounce loop? TODO: Use hashmap
+    let bounceRateData // for each unique, who visits another page
+})
 
 
 // POST: Logs a web page visit

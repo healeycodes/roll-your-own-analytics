@@ -8,7 +8,7 @@
 import * as cookies from 'cookies-js'
 import * as util from './lib/util'
 
-const trackingUrl = window.rollyourownanalytics.url
+const trackingUrl = window.rollyourownanalytics.url // Server location without trailing slash
 const pageTickRate = 5000 // Report user still on page every X milliseconds
 
 // Cookie name
