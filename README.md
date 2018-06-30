@@ -1,6 +1,6 @@
 ## Roll Your Own Analytics
 
-'''
+"""
 <script id='ryoa'>
     window.rollyourownanalytics = {};
     window.rollyourownanalytics.url = 'http://localhost:3000'; // Change this line
@@ -10,4 +10,4 @@
     document.getElementById('ryoa').parentNode.insertBefore(
         trackjs, document.getElementById('ryoa').nextSibling);
 </script>
-'''
+"""

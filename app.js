@@ -33,11 +33,6 @@ app.get('/', (req, res) => {
     res.redirect('/dashboard')
 })
 
-// Remove
-app.get('/add', (req, res) => {
-    const addDemoData = require('./demoData')
-    addDemoData()
-})
 
 // GET: Dashboard
 app.get('/dashboard', (req, res) => {
@@ -125,5 +120,13 @@ app.post('/track/time', (req, res) => {
             }
         })
 })
+
+
+/* Old route used for testing, may be useful
+app.get('/add', (req, res) => {
+    const addDemoData = require('./demoData')
+    addDemoData()
+}) */
+
 
 module.exports = app
