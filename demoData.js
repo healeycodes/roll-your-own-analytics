@@ -26,7 +26,7 @@ const rndReferrer = () => possibleReferrers[Math.floor(Math.random() * possibleR
 // Add demo data
 const addDemoData = () => {
     // Number of unique visitors
-    const dailyUniques = rndNumberBetween(50, 55)
+    const dailyUniques = rndNumberBetween(100, 120)
     // Max times they could come back
     const dailyVisits = rndNumberBetween(15, 25)
 

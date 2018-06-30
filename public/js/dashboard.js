@@ -42,7 +42,8 @@ const dailyButton = () => {
         }
     }
     dailyReq.responseType = 'json'
-    dailyReq.open('GET', 'api/period/1', true);
+    document.location.pathname == '/dashboard.html' ?
+        dailyReq.open('GET', 'demoDaily.json', true) : dailyReq.open('GET', 'api/period/1', true)
     dailyReq.send()
 }
 
@@ -63,7 +64,8 @@ const weeklyButton = () => {
         }
     }
     weeklyReq.responseType = 'json'
-    weeklyReq.open('GET', 'api/period/7', true);
+    document.location.pathname == '/dashboard.html' ?
+        weeklyReq.open('GET', 'demoWeekly.json', true) : weeklyReq.open('GET', 'api/period/7', true)
     weeklyReq.send()
 }
 
@@ -84,7 +86,8 @@ const monthlyButton = () => {
         }
     }
     monthlyReq.responseType = 'json'
-    monthlyReq.open('GET', 'api/period/30', true);
+    document.location.pathname == '/dashboard.html' ?
+        monthlyReq.open('GET', 'demoMonthly.json', true) : monthlyReq.open('GET', 'api/period/30', true)
     monthlyReq.send()
 }
 
@@ -204,7 +207,7 @@ const chartPerDay = (elementId, analytics) => {
     })
     labels = labels.map(daysSinceEpoch => new Date(8.64e+7 * daysSinceEpoch).getDate()) // Convert to date
 
-    var ctx = document.getElementById(elementId).getContext('2d');
+    var ctx = document.getElementById(elementId).getContext('2d')
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -245,7 +248,7 @@ const chartPerDay = (elementId, analytics) => {
 // Creates Pages chart
 
 const chartPages = (elementId, analytics) => {
-    var ctx = document.getElementById(elementId).getContext('2d');
+    var ctx = document.getElementById(elementId).getContext('2d')
     var myChart = new Chart(ctx, {
         type: 'horizontalBar',
         data: {
@@ -282,7 +285,7 @@ const chartPages = (elementId, analytics) => {
 // Creates Referral chart
 
 const chartReferral = (elementId, analytics) => {
-    var ctx = document.getElementById(elementId).getContext('2d');
+    var ctx = document.getElementById(elementId).getContext('2d')
     var myChart = new Chart(ctx, {
         type: 'horizontalBar',
         data: {
@@ -318,10 +321,10 @@ const chartReferral = (elementId, analytics) => {
 
 // Chart.js Globals
 
-Chart.defaults.scale.gridLines.display = false;
-Chart.defaults.global.responsive = true;
-Chart.defaults.global.animationEasing = "easeOutBounce";
-Chart.defaults.global.animation.duration = 2000;
+Chart.defaults.scale.gridLines.display = false
+Chart.defaults.global.responsive = true
+Chart.defaults.global.animationEasing = "easeOutBounce"
+Chart.defaults.global.animation.duration = 2000
 
 // Load monthly analytics by default
 

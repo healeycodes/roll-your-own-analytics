@@ -45,6 +45,12 @@ app.get('/dashboard', (req, res) => {
 })
 
 
+// GET: Demo Dashboard
+app.get('/demo', (req, res) => {
+    res.render(__dirname + '/public/dashboard')
+})
+
+
 // GET: JSON: Analytics for a custom period
 app.get('/api/period/:period', (req, res) => {
     // '-1' today's stats, '-7' past week, '-30' past month, etc.

@@ -5,19 +5,13 @@
     font-family: 'Open Sans', sans-serif;
 }
 
-#title {
-    font-family: 'Oswald', sans-serif;
-    text-align: center;
-    font-size: 3rem;
-    margin-bottom: 55px;
-}
-
-#timeSpan {
+#top {
     text-align: center;
     margin-bottom: 38px;
 }
 
 button {
+    font-family: 'Helvetica Neue', sans-serif;
     background-color: rgba(54, 162, 235, 0.2);
     border: 2px solid rgba(54, 162, 235, 1);
     color: rgba(54, 162, 235, 1);
@@ -27,7 +21,7 @@ button {
     display: inline-block;
     font-size: 20px;
     letter-spacing: 1px;
-    margin-right: 1%;
+    margin: 1%;
 }
 
 .mainContainer {

@@ -4,6 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="/css/odometer-theme-default.css">
     <script src="/js/chart.bundle.min.js"></script>
     <script src="/js/odometer.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald" rel="stylesheet">
@@ -11,8 +12,7 @@
 </head>
 
 <body>
-    <h1 id="title">Roll Your Own Analytics</h1>
-    <div id="timeSpan">
+    <div id="top">
         <button id="buttonDaily" onclick="dailyButton()">Today</button>
         <button id="buttonWeekly" onclick="weeklyButton()">This Week</button>
         <button id="buttonMonthly" onclick="monthlyButton()">This Month</button>
@@ -21,19 +21,19 @@
         <div id="textStats">
             <div class="h-inline">
                 <h3>Page Views</h3>
-                <div id="pageViews" class="largeNum"></div>
+                <div id="pageViews" class="odometer largeNum"></div>
             </div>
             <div class="h-inline">
                 <h3>Unique Visitors</h3>
-                <div id="uniqueVis" class="largeNum"></div>
+                <div id="uniqueVis" class="odometer largeNum"></div>
             </div>
             <div class="h-inline">
-                <h3>Avg. Time On Page</h3>
-                <div id="averageTime" class="largeNum"></div>
+                <h3>Avg. Time On Page (sec)</h3>
+                <div id="averageTime" class="odometer largeNum"></div>
             </div>
             <div class="h-inline">
-                <h3>Bounce Rate</h3>
-                <div id="bounced" class="largeNum"></div>
+                <h3>Bounce Rate (%)</h3>
+                <div id="bounced" class="odometer largeNum"></div>
             </div>
         </div>
         <hr/>
