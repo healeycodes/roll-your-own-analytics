@@ -34,7 +34,9 @@ const monthlyReq = new XMLHttpRequest()
 monthlyReq.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
         monthlyAnalytics = analyseData(monthlyReq.response)
-        charts()
+        chartPages('chartPages', monthlyAnalytics)
+        chartReferral('chartReferrals', monthlyAnalytics)
+        chartPerDay('chartPerDay', monthlyAnalytics)
     }
 }
 monthlyReq.responseType = 'json'
@@ -49,6 +51,7 @@ const analyseData = views => {
     let timeSpent = {} // {'viewerId': 0}} all time spent on site, for 'avg time on site'
     let bounced = {} // {'viewerId': true} Only one view means they bounced
     let totalPageViews = 0 // Simple incrementing for hit count
+    let perDay = {} // {'daysSinceEpoch': {'viewerIds': new Set(), 'hitIds': new Set()} To track daily trends
 
     views.forEach(view => {
         // Page stats
@@ -83,6 +86,15 @@ const analyseData = views => {
         }
         // Total page views
         totalPageViews += 1
+        // Per day stats
+        if (!(view.daysSinceEpoch in perDay)) {
+            perDay[view.daysSinceEpoch] = {}
+            perDay[view.daysSinceEpoch].viewerIds = new Set()
+            perDay[view.daysSinceEpoch].hitIds = new Set()
+        } else {
+            perDay[view.daysSinceEpoch].viewerIds.add(view.viewerId)
+            perDay[view.daysSinceEpoch].hitIds.add(view.hitId)
+        }
     })
 
     data = {}
@@ -91,32 +103,41 @@ const analyseData = views => {
     data.timeSpent = timeSpent
     data.bounced = bounced
     data.totalPageViews = totalPageViews
+    data.perDay = perDay
     return data
 }
 
 // https://stackoverflow.com/a/5365036
 const rndColor = () => { '#' + ((1 << 24) * Math.random() | 0).toString(16) }
 
+const chartPerDay = (elementId, analytics) => {
+    labels = Object.keys(analytics.perDay).sort()
+    views = []
+    uniques = []
+    labels.forEach(key => {
+      views.push(analytics.perDay[String(key)].viewerIds.size)  
+      uniques.push(analytics.perDay[String(key)].hitIds.size)  
+    })
+    labels = labels.map(daysSinceEpoch => new Date(8.64e+7 * daysSinceEpoch).getDate())
 
-const charts = () => {
-    var ctx = document.getElementById('chartPages').getContext('2d');
+    var ctx = document.getElementById(elementId).getContext('2d');
     var myChart = new Chart(ctx, {
-        type: 'horizontalBar',
+        type: 'bar',
         data: {
-            labels: Object.keys(monthlyAnalytics.pages),
+            labels: labels,
             datasets: [
                 {
-                    label: 'Views',
+                    label: '# of Views',
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1,
-                    data: Object.keys(monthlyAnalytics.pages).map(key => Object.values(monthlyAnalytics.pages[key]).reduce((sum, x) => sum + x))
+                    data: views
                 }, {
-                    label: 'Uniques',
+                    label: '# of Uniques',
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255,99,132,1)',
                     borderWidth: 1,
-                    data: Object.keys(monthlyAnalytics.pages).map(key => Object.keys(monthlyAnalytics.pages[key]).length)
+                    data: uniques
                 }
             ]
         },
@@ -129,6 +150,79 @@ const charts = () => {
                 }]
             }
         }
-    });
+    })
 }
 
+const chartPages = (elementId, analytics) => {
+    var ctx = document.getElementById(elementId).getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: Object.keys(analytics.pages),
+            datasets: [
+                {
+                    label: '# of Views',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    data: Object.keys(analytics.pages).map(key => Object.values(analytics.pages[key]).reduce((sum, x) => sum + x))
+                }, {
+                    label: '# of Uniques',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255,99,132,1)',
+                    borderWidth: 1,
+                    data: Object.keys(analytics.pages).map(key => Object.keys(analytics.pages[key]).length)
+                }
+            ]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    })
+}
+
+const chartReferral = (elementId, analytics) => {
+    var ctx = document.getElementById(elementId).getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: Object.keys(analytics.referrers),
+            datasets: [
+                {
+                    label: '# of Views',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    data: Object.keys(analytics.referrers).map(key => Object.values(analytics.referrers[key]).reduce((sum, x) => sum + x))
+                }, {
+                    label: '# of Uniques',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255,99,132,1)',
+                    borderWidth: 1,
+                    data: Object.keys(analytics.referrers).map(key => Object.keys(analytics.referrers[key]).length)
+                }
+            ]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    })
+}
+
+// Chart.js Globals
+Chart.defaults.scale.gridLines.display = false;
+Chart.defaults.global.responsive = true;
+Chart.defaults.global.animationEasing = "easeOutBounce";
+Chart.defaults.global.animation.duration = 2000;

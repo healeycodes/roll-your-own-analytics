@@ -2,13 +2,27 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
     <script src="/js/chart.bundle.min.js"></script>
     <title>Roll Your Own Analytics</title>
 </head>
 
 <body>
-    <h1 id="h1">a</h1>
-    <canvas id="chartPages" width="1600" height="900"></canvas>
+    <div class="chart-container">
+        <h2>Per Day</h2>
+        <canvas id="chartPerDay" width="1000" height="500"></canvas>
+    </div>
+    <div class="chart-container">
+        <h2>Pages</h2>
+        <canvas id="chartPages" width="1000" height="500"></canvas>
+    </div>
+    <div class="chart-container">
+        <h2>Referrals</h2>
+        <canvas id="chartReferrals" width="1000" height="500"></canvas>
+    </div>
+
+
     <script src="/js/dashboard.js"></script>
 </body>
 

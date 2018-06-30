@@ -1,0 +1,10 @@
+* {
+    color: #222;
+    -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.chart-container {
+    width: 80%;
+    height: 40%;
+}
