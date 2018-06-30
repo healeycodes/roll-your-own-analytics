@@ -5,24 +5,53 @@
     <meta name="viewport" content="width=device-width initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
     <script src="/js/chart.bundle.min.js"></script>
+    <script src="/js/odometer.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald" rel="stylesheet">
     <title>Roll Your Own Analytics</title>
 </head>
 
 <body>
-    <div class="chart-container">
-        <h2>Per Day</h2>
-        <canvas id="chartPerDay" width="1000" height="500"></canvas>
+    <h1 id="title">Roll Your Own Analytics</h1>
+    <div id="timeSpan">
+        <button id="buttonDaily" onclick="dailyButton()">Today</button>
+        <button id="buttonWeekly" onclick="weeklyButton()">This Week</button>
+        <button id="buttonMonthly" onclick="monthlyButton()">This Month</button>
     </div>
-    <div class="chart-container">
-        <h2>Pages</h2>
-        <canvas id="chartPages" width="1000" height="500"></canvas>
+    <div class="mainContainer">
+        <div id="textStats">
+            <div class="h-inline">
+                <h3>Page Views</h3>
+                <div id="pageViews" class="largeNum"></div>
+            </div>
+            <div class="h-inline">
+                <h3>Unique Visitors</h3>
+                <div id="uniqueVis" class="largeNum"></div>
+            </div>
+            <div class="h-inline">
+                <h3>Avg. Time On Page</h3>
+                <div id="averageTime" class="largeNum"></div>
+            </div>
+            <div class="h-inline">
+                <h3>Bounce Rate</h3>
+                <div id="bounced" class="largeNum"></div>
+            </div>
+        </div>
+        <hr/>
+        <div class="chart-container">
+            <h2 class="statsHead">Per Day</h2>
+            <canvas id="chartPerDay" width="1000" height="500"></canvas>
+        </div>
+        <hr/>
+        <div class="chart-container">
+            <h2 class="statsHead">Pages</h2>
+            <canvas id="chartPages" width="1000" height="500"></canvas>
+        </div>
+        <hr/>
+        <div class="chart-container">
+            <h2 class="statsHead">Referrals</h2>
+            <canvas id="chartReferrals" width="1000" height="500"></canvas>
+        </div>
     </div>
-    <div class="chart-container">
-        <h2>Referrals</h2>
-        <canvas id="chartReferrals" width="1000" height="500"></canvas>
-    </div>
-
-
     <script src="/js/dashboard.js"></script>
 </body>
 

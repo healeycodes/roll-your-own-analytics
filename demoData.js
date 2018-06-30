@@ -26,8 +26,8 @@ const rndReferrer = () => possibleReferrers[Math.floor(Math.random() * possibleR
 // Add demo data
 const addDemoData = () => {
     // Number of unique visitors
-    const dailyUniques = rndNumberBetween(20, 200)
-    // How many times they come back
+    const dailyUniques = rndNumberBetween(50, 55)
+    // Max times they could come back
     const dailyVisits = rndNumberBetween(15, 25)
 
     // Unique visitor loop
@@ -38,7 +38,7 @@ const addDemoData = () => {
         // Individual visit loop
         for (let j = 0; j < dailyVisits; j++) {
             models.View.create({
-                daysSinceEpoch: Math.round(Date.now() / 1000 / 60 / 60 / 24),
+                daysSinceEpoch: Math.round(Date.now() / 1000 / 60 / 60 / 24) - rndNumberBetween(-1, 31),
                 time: Date.now(),
                 hitId: rndId(),
                 viewerId: viewerId,

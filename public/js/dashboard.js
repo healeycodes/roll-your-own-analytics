@@ -1,54 +1,100 @@
 /* dashboard.js
  *
  * All the front-end logic behind the Dashboard.
- * Grabs raw view data via API, analyses it, and presents it.
+ * Grabs raw view data via API, analyses it, and presents it with Chart.js
 */
-
 
 let dailyAnalytics = {}
 let weeklyAnalytics = {}
 let monthlyAnalytics = {}
 
-// Daily analytics
-const dailyReq = new XMLHttpRequest()
-dailyReq.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-        dailyAnalytics = analyseData(dailyReq.response)
-    }
-}
-dailyReq.responseType = 'json'
-dailyReq.open('GET', 'api/period/1', true);
-dailyReq.send()
-// Weekly analytics
-const weeklyReq = new XMLHttpRequest()
-weeklyReq.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-        weeklyAnalytics = analyseData(weeklyReq.response)
-    }
-}
-weeklyReq.responseType = 'json'
-weeklyReq.open('GET', 'api/period/7', true);
-weeklyReq.send()
-// Monthly analytics
-const monthlyReq = new XMLHttpRequest()
-monthlyReq.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-        monthlyAnalytics = analyseData(monthlyReq.response)
-        chartPages('chartPages', monthlyAnalytics)
-        chartReferral('chartReferrals', monthlyAnalytics)
-        chartPerDay('chartPerDay', monthlyAnalytics)
-    }
-}
-monthlyReq.responseType = 'json'
-monthlyReq.open('GET', 'api/period/30', true);
-monthlyReq.send()
+// Keep track of charts to destroy old ones
 
+let charts = []
+const clearCharts = () => charts.forEach(chart => chart.destroy())
+
+// Button outlines
+
+const defaultBorder = '2px solid rgba(54, 162, 235, 1)'
+const clickedBorder = '4px solid rgba(54, 162, 235, 1)'
+
+const swapFocusedTo = (buttonId) => {
+    document.getElementById('buttonDaily').style.border = defaultBorder
+    document.getElementById('buttonWeekly').style.border = defaultBorder
+    document.getElementById('buttonMonthly').style.border = defaultBorder
+    document.getElementById(buttonId).style.border = clickedBorder
+}
+
+// Daily analytics button
+
+const dailyButton = () => {
+    swapFocusedTo('buttonDaily')
+
+    const dailyReq = new XMLHttpRequest()
+    dailyReq.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            dailyAnalytics = analyseData(dailyReq.response)
+            clearCharts()
+            chartPages('chartPages', dailyAnalytics)
+            chartReferral('chartReferrals', dailyAnalytics)
+            chartPerDay('chartPerDay', dailyAnalytics)
+            textStats(dailyAnalytics)
+        }
+    }
+    dailyReq.responseType = 'json'
+    dailyReq.open('GET', 'api/period/1', true);
+    dailyReq.send()
+}
+
+// Weekly analytics button
+
+const weeklyButton = () => {
+    swapFocusedTo('buttonWeekly')
+
+    const weeklyReq = new XMLHttpRequest()
+    weeklyReq.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            weeklyAnalytics = analyseData(weeklyReq.response)
+            clearCharts()
+            chartPages('chartPages', weeklyAnalytics)
+            chartReferral('chartReferrals', weeklyAnalytics)
+            chartPerDay('chartPerDay', weeklyAnalytics)
+            textStats(weeklyAnalytics)
+        }
+    }
+    weeklyReq.responseType = 'json'
+    weeklyReq.open('GET', 'api/period/7', true);
+    weeklyReq.send()
+}
+
+// Monthly analytics button
+
+const monthlyButton = () => {
+    swapFocusedTo('buttonMonthly')
+
+    const monthlyReq = new XMLHttpRequest()
+    monthlyReq.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            monthlyAnalytics = analyseData(monthlyReq.response)
+            clearCharts()
+            chartPages('chartPages', monthlyAnalytics)
+            chartReferral('chartReferrals', monthlyAnalytics)
+            chartPerDay('chartPerDay', monthlyAnalytics)
+            textStats(monthlyAnalytics)
+        }
+    }
+    monthlyReq.responseType = 'json'
+    monthlyReq.open('GET', 'api/period/30', true);
+    monthlyReq.send()
+}
+
+// Take in raw JSON view data and process it, return as an easier to handle data object
 
 const analyseData = views => {
 
     let pages = {} // {'pathName':{'viewerId': 1}} each pathName's visit count per unique
     let referrers = {} // 'referrer':{'viewerId': 1}} each referrer's referral count per unique
-    let timeSpent = {} // {'viewerId': 0}} all time spent on site, for 'avg time on site'
+    let timeOnPage = {} // {'viewerId': 0} all time spent on site, for 'avg time on site'
     let bounced = {} // {'viewerId': true} Only one view means they bounced
     let totalPageViews = 0 // Simple incrementing for hit count
     let perDay = {} // {'daysSinceEpoch': {'viewerIds': new Set(), 'hitIds': new Set()} To track daily trends
@@ -73,10 +119,10 @@ const analyseData = views => {
             referrers[view.referrer][view.viewerId] += 1
         }
         // Time spent stats
-        if (!(view.viewerId in timeSpent)) {
-            timeSpent[view.viewerId] = view.timeSpent
+        if (!(view.viewerId in timeOnPage)) {
+            timeOnPage[view.viewerId] = parseInt(view.timeOnPage)
         } else {
-            timeSpent[view.viewerId] += view.timeSpent
+            timeOnPage[view.viewerId] += view.timeOnPage
         }
         // Bounce rate
         if (!(view.viewerId in bounced)) {
@@ -100,7 +146,7 @@ const analyseData = views => {
     data = {}
     data.pages = pages
     data.referrers = referrers
-    data.timeSpent = timeSpent
+    data.timeOnPage = timeOnPage
     data.bounced = bounced
     data.totalPageViews = totalPageViews
     data.perDay = perDay
@@ -108,17 +154,55 @@ const analyseData = views => {
 }
 
 // https://stackoverflow.com/a/5365036
+
 const rndColor = () => { '#' + ((1 << 24) * Math.random() | 0).toString(16) }
 
+// Build and write to page our text stats
+
+const textStats = (analytics) => {
+    const pageViews = document.getElementById('pageViews')
+    const uniqueVis = document.getElementById('uniqueVis')
+    const averageTime = document.getElementById('averageTime')
+    const bounced = document.getElementById('bounced')
+
+    // Views
+    days = Object.keys(analytics.perDay)
+    views = 0
+    uniques = 0
+    days.forEach(key => {
+        views += analytics.perDay[String(key)].hitIds.size
+        uniques += analytics.perDay[String(key)].viewerIds.size
+    })
+    pageViews.innerText = views
+    uniqueVis.innerText = uniques
+
+    // Average time
+    averageTime.innerText = Math.floor(Object.values(analytics.timeOnPage).reduce((sum, x) => sum + x) / analytics.totalPageViews)
+        + " sec"
+
+    // Bounced
+    bounceNum = 0
+    didntBounceNum = 0
+    Object.values(analytics.bounced).forEach(bounce => bounce ? bounceNum += 1 : didntBounceNum += 1)
+    if (Math.floor(bounceNum / (bounceNum + didntBounceNum) * 100) === NaN) {
+        bounced.innerText = '0%'
+    } else {
+        bounced.innerText = String(Math.floor(bounceNum / (bounceNum + didntBounceNum) * 100)) + '%'
+    }
+
+}
+
+// Creates Per Day chart
+
 const chartPerDay = (elementId, analytics) => {
-    labels = Object.keys(analytics.perDay).sort()
+    labels = Object.keys(analytics.perDay).sort() // Use sorted order to grab data in that order
     views = []
     uniques = []
     labels.forEach(key => {
-      views.push(analytics.perDay[String(key)].viewerIds.size)  
-      uniques.push(analytics.perDay[String(key)].hitIds.size)  
+        views.push(analytics.perDay[String(key)].viewerIds.size)
+        uniques.push(analytics.perDay[String(key)].hitIds.size)
     })
-    labels = labels.map(daysSinceEpoch => new Date(8.64e+7 * daysSinceEpoch).getDate())
+    labels = labels.map(daysSinceEpoch => new Date(8.64e+7 * daysSinceEpoch).getDate()) // Convert to date
 
     var ctx = document.getElementById(elementId).getContext('2d');
     var myChart = new Chart(ctx, {
@@ -146,12 +230,19 @@ const chartPerDay = (elementId, analytics) => {
                 xAxes: [{
                     ticks: {
                         beginAtZero: true
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date'
                     }
                 }]
             }
         }
     })
+    charts.push(myChart)
 }
+
+// Creates Pages chart
 
 const chartPages = (elementId, analytics) => {
     var ctx = document.getElementById(elementId).getContext('2d');
@@ -185,7 +276,10 @@ const chartPages = (elementId, analytics) => {
             }
         }
     })
+    charts.push(myChart)
 }
+
+// Creates Referral chart
 
 const chartReferral = (elementId, analytics) => {
     var ctx = document.getElementById(elementId).getContext('2d');
@@ -219,10 +313,16 @@ const chartReferral = (elementId, analytics) => {
             }
         }
     })
+    charts.push(myChart)
 }
 
 // Chart.js Globals
+
 Chart.defaults.scale.gridLines.display = false;
 Chart.defaults.global.responsive = true;
 Chart.defaults.global.animationEasing = "easeOutBounce";
 Chart.defaults.global.animation.duration = 2000;
+
+// Load monthly analytics by default
+
+monthlyButton()
