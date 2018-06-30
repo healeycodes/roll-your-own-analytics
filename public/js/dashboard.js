@@ -91,6 +91,14 @@ const monthlyButton = () => {
     monthlyReq.send()
 }
 
+// Show demo header if demo
+if (document.location.pathname == '/dashboard.html') {
+    const demoDiv = document.createElement('div')
+    const demoHTML = '<h3 style="text-align: center">This is the demo dashboard of <a href="https://github.com/healeycodes/roll-your-own-analytics">Roll Your Own Analytics</a>.</h3>'
+    demoDiv.innerHTML = demoHTML
+    document.body.insertBefore(demoDiv, document.getElementById('top'))
+}
+
 // Take in raw JSON view data and process it, return as an easier to handle data object
 
 const analyseData = views => {
