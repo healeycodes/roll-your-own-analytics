@@ -2,7 +2,6 @@
 module.exports = (sequelize, DataTypes) => {
     const View = sequelize.define('View', {
         daysSinceEpoch: DataTypes.INTEGER,
-        time: DataTypes.STRING,
         hitId: DataTypes.STRING,
         viewerId: DataTypes.STRING,
         pathName: DataTypes.STRING,
@@ -10,8 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         referrer: DataTypes.STRING,
         timeOnPage: DataTypes.INTEGER
     }, {})
-    View.associate = (models) => {
-        // associations can be defined here
-    }
+    // No associations yet
+    // View.associate = (models) => {}
     return View;
 }

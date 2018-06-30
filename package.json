@@ -8,18 +8,23 @@
   },
   "scripts": {
     "webpack": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "expect.js": "^0.3.1",
+    "jest": "^23.1.0",
+    "supertest": "^3.1.0",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.6"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookies-js": "^1.2.3",
+    "cors": "^2.8.4",
+    "ejs": "^2.6.1",
     "express": "^4.16.3",
     "sequelize": "^4.37.10",
     "sqlite3": "^4.0.0"
