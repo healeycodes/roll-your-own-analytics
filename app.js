@@ -5,11 +5,16 @@
  * bounce rate, top pages, top referrers, and variations of these.
  */
 
+const op = require('sequelize').Op;
 const models = require('./models')
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const app = express()
+app.use(express.static('public'))
+app.use('/static', express.static(__dirname + 'public'))
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cors()) // Enable Cross-Origin Resource Sharing (CORS) 
@@ -25,39 +30,39 @@ app.get('/track.js', (req, res) => res.sendFile(__dirname + '/dist/track.js'))
 
 // GET: Home
 app.get('/', (req, res) => {
-    let str = ''
-    models.View.findAll({
-        where: {
-            daysSinceEpoch: Math.round(Date.now() / 1000 / 60 / 60 / 24)
-        }
-    })
-        .then(instances => {
-            for (let i = 0; i < instances.length; i++) {
-                str += String(instances[i].pathName) + '\n'
-            }
-            res.send(str)
-        })
+    res.redirect('/dashboard')
 })
 
+// Remove
 app.get('/add', (req, res) => {
     const addDemoData = require('./demoData')
     addDemoData()
 })
 
-
 // GET: Dashboard
 app.get('/dashboard', (req, res) => {
+    res.render(__dirname + '/public/dashboard')
+})
 
-    // Main loop
 
-    let pages = {} // 'page' : {views: 0, uniques: 0}
-    let referrers = {} // 'referrer' : {views: 0, uniques: 0}
-    let totalUniques = 0
-    let totalPageViews = 0
-    let averageTimeOnSiteData = {'views': 0, 'timeSpent': 0}
+// GET: JSON: Analytics for a custom period
+app.get('/api/period/:period', (req, res) => {
+    // '-1' today's stats, '-7' past week, '-30' past month, etc.
+    const period = parseInt(req.params.period)
 
-    // Bounce loop? TODO: Use hashmap
-    let bounceRateData // for each unique, who visits another page
+    models.View.findAll({
+        where: {
+            daysSinceEpoch: {
+                [op.lte]: Math.round(Date.now() / 1000 / 60 / 60 / 24),
+                [op.gt]: Math.round(Date.now() / 1000 / 60 / 60 / 24) - period
+            }
+        },
+        attributes: ['daysSinceEpoch', 'hitId', 'viewerId',
+            'pathName', 'query', 'referrer', 'timeOnPage']
+    })
+        .then(views => {
+            res.send(JSON.stringify(views))
+        })
 })
 
 

@@ -20,7 +20,7 @@ const rndPath = () => possiblePaths[Math.floor(Math.random() * possiblePaths.len
 
 // Random referrers
 const possibleReferrers = ['google.com', 'google.com', 'google.com', 'google.com',
-    'facebook.com', 'facebook.com', 'yahoo.com', 'youtube.com', 'tumblr.com']
+    'facebook.com', 'facebook.com', 'yahoo.com', 'youtube.com', 'tumblr.com', '', '', '']
 const rndReferrer = () => possibleReferrers[Math.floor(Math.random() * possibleReferrers.length)];
 
 // Add demo data
