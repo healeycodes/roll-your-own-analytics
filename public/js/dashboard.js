@@ -148,6 +148,8 @@ const analyseData = views => {
             perDay[view.daysSinceEpoch] = {}
             perDay[view.daysSinceEpoch].viewerIds = new Set()
             perDay[view.daysSinceEpoch].hitIds = new Set()
+            perDay[view.daysSinceEpoch].viewerIds.add(view.viewerId)
+            perDay[view.daysSinceEpoch].hitIds.add(view.hitId)
         } else {
             perDay[view.daysSinceEpoch].viewerIds.add(view.viewerId)
             perDay[view.daysSinceEpoch].hitIds.add(view.hitId)
