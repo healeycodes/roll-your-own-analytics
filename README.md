@@ -21,7 +21,7 @@ Users are tracked via a minified and Babel-transpiled script. Simply add the fol
 </script>
 ```
 
-This downloads `track.js` asynchronously, and reports visitor data back to the analytics server.
+This serves `track.js` asynchronously, and reports visitor data back to the analytics server.
 
 <br>
 
@@ -58,7 +58,7 @@ The dashboard is avaliable at `/` or `/dashboard` which you'll presumably want t
 
 ### Data/Privacy
 
-I make no claims about this being GDPR compliant however user data is fairly anonymous and cookies expire at midnight of every day. A 'piece' of data looks like the following:
+I make no claims about this being GDPR compliant however user data is fairly anonymous and cookies expire at midnight of every day. A typical 'piece' of data looks like the following:
 
 ```json
 {"daysSinceEpoch":17698,"hitId":"HThGuycEKUW04MfY46erP6BGEy1A9vNmQU2kNJDf0NONLKNgQ5aGSQQns70O7qzF",
