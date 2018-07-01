@@ -2,7 +2,7 @@
 
 This is a complete website analytics service with extensive data visualization. On the server-side it uses Node.js and Sequelize. By default the database is SQLite.
 
-Keep track of unique visitors, page views, referrals, time spent per page, bounce rate and more! 
+Keep track of unique visitors, page views, referrals, time spent per page, bounce rate and more!
 
 ![alt text](https://raw.githubusercontent.com/healeycodes/roll-your-own-analytics/master/public/img/demo.png "Dashboard image one")
 
@@ -49,7 +49,7 @@ Tested with Jest and SuperTest.
 
 <br>
 
-#### HTTP vs HTTPS
+### HTTP vs HTTPS
 
 You can require 'https' in `server.js` and add in your keys if needed.
 
@@ -62,3 +62,7 @@ See: https://expressjs.com/en/api.html#app.listen for more information.
 <br>
 
 ![alt text](https://raw.githubusercontent.com/healeycodes/roll-your-own-analytics/master/public/img/demo-two.png "Dashboard image two")
+
+### License
+
+https://mit-license.org/
