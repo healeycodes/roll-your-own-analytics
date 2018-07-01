@@ -7,20 +7,21 @@
 
 #top {
     text-align: center;
-    margin-bottom: 38px;
+    margin-bottom: 10px;
 }
 
 button {
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     background-color: rgba(54, 162, 235, 0.2);
     border: 2px solid rgba(54, 162, 235, 1);
+    border-radius: 8px;
     color: rgba(54, 162, 235, 1);
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    cursor: pointer;
     font-size: 20px;
-    letter-spacing: 1px;
     margin: 1%;
 }
 
