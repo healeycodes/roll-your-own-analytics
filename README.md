@@ -4,7 +4,7 @@ This is a complete website analytics service with extensive data visualization. 
 
 ![alt text](https://raw.githubusercontent.com/healeycodes/roll-your-own-analytics/master/public/img/demo.png "Image of a room on Deux Codes")
 
-![alt text](https://raw.githubusercontent.com/healeycodes/roll-your-own-analytics/master/public/img/demo2.png "Image of a room on Deux Codes")
+![alt text](https://raw.githubusercontent.com/healeycodes/roll-your-own-analytics/master/public/img/demo-two.png "Image of a room on Deux Codes")
 
 Users are tracked via a tiny transpiled script. Simply add the follow code block on all the pages you want to track.
 
