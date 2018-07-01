@@ -1,6 +1,10 @@
 ## Roll Your Own Analytics
 
-"""
+This is a complete website analytics service with extensive data visualization via Chart.js. It enables user-tracking via a tiny transpiled script.
+
+On the server-side it uses Node.js and Sequelize. By default the database is SQLite.
+
+```
 <script id='ryoa'>
     window.rollyourownanalytics = {};
     window.rollyourownanalytics.url = 'http://localhost:3000'; // Change this line
@@ -10,4 +14,4 @@
     document.getElementById('ryoa').parentNode.insertBefore(
         trackjs, document.getElementById('ryoa').nextSibling);
 </script>
-"""
+```
