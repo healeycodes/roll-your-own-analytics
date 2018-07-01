@@ -44,4 +44,6 @@ Tested with Jest and SuperTest.
 
 `node .\server.js`
 
+<br>
+
 ![alt text](https://raw.githubusercontent.com/healeycodes/roll-your-own-analytics/master/public/img/demo-two.png "Dashboard image two")
