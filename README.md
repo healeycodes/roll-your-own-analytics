@@ -1,6 +1,8 @@
 ### Roll Your Own Analytics ~ https://healeycodes.github.io/dashboard.html
 
-This is a complete website analytics service with extensive data visualization. On the server-side it uses Node.js and Sequelize. By default the database is SQLite. Keep track of daily, weekly, and monthly stats about unique visitors, page views, referral links, time spent per page, bounce rate and more! 
+This is a complete website analytics service with extensive data visualization. On the server-side it uses Node.js and Sequelize. By default the database is SQLite.
+
+Keep track of unique visitors, page views, referrals, time spent per page, bounce rate and more! 
 
 ![alt text](https://raw.githubusercontent.com/healeycodes/roll-your-own-analytics/master/public/img/demo.png "Dashboard image one")
 
