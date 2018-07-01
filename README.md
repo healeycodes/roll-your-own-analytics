@@ -61,7 +61,9 @@ The dashboard is avaliable at `/` or `/dashboard` which you'll presumably want t
 I make no claims about this being GDPR compliant however user data is fairly anonymous and cookies expire at midnight of every day. A 'piece' of data looks like the following:
 
 ```json
-{"daysSinceEpoch":17698,"hitId":"HThGuycEKUW04MfY46erP6BGEy1A9vNmQU2kNJDf0NONLKNgQ5aGSQQns70O7qzF","viewerId":"06R3vb9mK1EHFUX3zjxGuhVUE8vYXJuywjZHaUAKUwec4IwKrktCuYvQ0A41Ml6V","pathName":"/about-us","query":"","referrer":"google.com","timeOnPage":20}
+{"daysSinceEpoch":17698,"hitId":"HThGuycEKUW04MfY46erP6BGEy1A9vNmQU2kNJDf0NONLKNgQ5aGSQQns70O7qzF",
+"viewerId":"06R3vb9mK1EHFUX3zjxGuhVUE8vYXJuywjZHaUAKUwec4IwKrktCuYvQ0A41Ml6V",
+"pathName":"/about-us","query":"","referrer":"google.com","timeOnPage":20}
 ```
 
 <br>
