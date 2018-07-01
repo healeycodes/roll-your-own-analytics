@@ -16,6 +16,8 @@ Users are tracked via a tiny transpiled script. Simply add the follow code block
 </script>
 ```
 
+<br>
+
 ### Build
 
 `npm install`
@@ -23,11 +25,16 @@ Users are tracked via a tiny transpiled script. Simply add the follow code block
 
 `npx webpack`
 
+<br>
+
+
 ### Test
 
 Tested with Jest and SuperTest.
 
 `npm test`
+
+<br>
 
 ### Run
 
