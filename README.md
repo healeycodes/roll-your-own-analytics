@@ -1,8 +1,10 @@
 ## Roll Your Own Analytics
 
-This is a complete website analytics service with extensive data visualization via Chart.js. It enables user-tracking via a tiny transpiled script.
+Complete website analytics service with extensive data visualization.
 
 On the server-side it uses Node.js and Sequelize. By default the database is SQLite.
+
+User-tracking via a tiny transpiled script.
 
 ```
 <script id='ryoa'>
