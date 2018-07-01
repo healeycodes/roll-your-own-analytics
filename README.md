@@ -49,7 +49,7 @@ Tested with Jest and SuperTest.
 
 <br>
 
-Now you can recieve data from the tracking script, which reports to `/track/log` and `/track/time`.
+Now you can recieve data from the tracking script automatically via `/track/log` and `/track/time`.
 
 The dashboard is avaliable at `/` or `/dashboard` which you'll presumably want to proxy behind something or add your own authentication method.
 
