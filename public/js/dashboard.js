@@ -299,7 +299,7 @@ const chartReferral = (elementId, analytics) => {
     var myChart = new Chart(ctx, {
         type: 'horizontalBar',
         data: {
-            labels: Object.keys(analytics.referrers),
+            labels: Object.keys(analytics.referrers).map(ref => ref == false ? 'no ref.' : ref), // Filter out empty strings
             datasets: [
                 {
                     label: '# of Views',
