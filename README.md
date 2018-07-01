@@ -1,4 +1,4 @@
-## Roll Your Own Analytics ~ https://healeycodes.github.io/dashboard.html
+### Roll Your Own Analytics ~ https://healeycodes.github.io/dashboard.html
 
 This is a complete website analytics service with extensive data visualization. On the server-side it uses Node.js and Sequelize. By default the database is SQLite.
 
