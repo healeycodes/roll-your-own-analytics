@@ -5,6 +5,10 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+h3 {
+    font-size: 1em;
+}
+
 #top {
     text-align: center;
     margin-bottom: 10px;
