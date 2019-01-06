@@ -4,8 +4,6 @@ This is a complete website analytics service (front end/back end/tracking script
 
 Keep track of unique visitors, page views, referrals, time spent per page, bounce rate and more!
 
-![alt text](https://raw.githubusercontent.com/healeycodes/roll-your-own-analytics/master/public/img/demo.png "Dashboard image one")
-
 Users are tracked via a minified and Babel-transpiled script. Simply add the follow code block on all the pages you want to track.
 
 ```javascript
@@ -21,9 +19,11 @@ Users are tracked via a minified and Babel-transpiled script. Simply add the fol
 </script>
 ```
 
-This serves `track.js` asynchronously, and reports visitor data back to the analytics server.
+This serves `track.js` asynchronously, and reports visitor data back to the RYOA Node.js server.
 
 <br>
+
+![alt text](https://raw.githubusercontent.com/healeycodes/roll-your-own-analytics/master/public/img/demo.png "Dashboard image one")
 
 ### Build
 
