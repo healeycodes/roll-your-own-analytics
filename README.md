@@ -2,7 +2,7 @@
 
 This is a complete website analytics service (front end/back end/tracking script) with data visualization. On the server-side it uses Node.js and Sequelize. By default the database is SQLite.
 
-Keep track of unique visitors, page views, referrals, time spent per page, bounce rate and more!
+*Keep track of unique visitors, page views, referrals, time spent per page, bounce rate and more!*
 
 Users are tracked via a minified and Babel-transpiled script. Simply add the follow code block on all the pages you want to track.
 
