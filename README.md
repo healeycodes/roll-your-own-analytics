@@ -4,7 +4,7 @@ This is a complete website analytics service (front end/back end/tracking script
 
 *Keep track of unique visitors, page views, referrals, time spent per page, bounce rate and more!*
 
-Users are tracked via a minified and Babel-transpiled script. Simply add the follow code block on all the pages you want to track.
+Users are tracked via a minified and Babel-transpiled script. Add the follow code block on all the pages you want to track.
 
 ```javascript
 <script id='ryoa'>
