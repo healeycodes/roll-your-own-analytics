@@ -10,7 +10,7 @@ describe('integration/app', () => {
     describe('Testing root path', () => {
         test('It should respond to the GET method with code 302', () => {
             return request(app).get('/')
-                .expect(200)
+                .expect(302)
         })
     })
 

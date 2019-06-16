@@ -1,3 +1,6 @@
+# Project
+db/test.sqlite
+
 # Logs
 logs
 *.log
