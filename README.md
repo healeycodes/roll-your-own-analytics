@@ -1,4 +1,6 @@
-### Roll Your Own Analytics
+[![Build Status](https://travis-ci.com/healeycodes/roll-your-own-analytics.svg?branch=master)](https://travis-ci.com/healeycodes/roll-your-own-analytics)
+
+## Roll Your Own Analytics
 
 This is a complete website analytics service (front end/back end/tracking script) with data visualization. On the server-side it uses Node.js and Sequelize. By default the database is SQLite.
 
